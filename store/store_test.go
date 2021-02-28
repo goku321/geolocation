@@ -28,7 +28,7 @@ var dropTableStmt = "DROP TABLE geolocations"
 func setup(t *testing.T) {
 	t.Helper()
 	var err error
-	connStr := "host=127.0.0.1 user=postgres dbname=postgres password=postgres port=6432 sslmode=disable"
+	connStr := "host=127.0.0.1 user=postgres dbname=postgres password=postgres port=5432 sslmode=disable"
 	db, err = sqlx.Open("postgres", connStr)
 	require.NoError(t, err)
 	postgresTestDB = New(db)

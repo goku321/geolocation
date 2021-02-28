@@ -3,3 +3,11 @@
 ## Goals
 - to provide an interface to access geolocation data stored on disk or in-memory.
 - to provide a default csv importer that parses and imports csv data to a storage system.
+
+## Tests
+
+### to run all the tests
+
+`make test`
+
+- run store tests: `make test-store`
