@@ -33,6 +33,11 @@ func (c *csvImporter) Parse(file string) (map[string]*GeoData, error) {
 	defer f.Close()
 
 	csvReader := csv.NewReader(f)
+	// Skip header row
+	_, err = csvReader.Read()
+	if err != nil {
+		return nil, err
+	}
 
 	geoLocations := map[string]*GeoData{}
 	for {
@@ -46,7 +51,7 @@ func (c *csvImporter) Parse(file string) (map[string]*GeoData, error) {
 
 		g, err := parse(row)
 		if err != nil {
-			c.stats.skipped++
+			c.stats.Skipped++
 			continue
 		}
 		geoLocations[g.IP] = g
@@ -58,11 +63,11 @@ func (c *csvImporter) Parse(file string) (map[string]*GeoData, error) {
 func (c *csvImporter) Import(x map[string]*GeoData) (Stats, error) {
 	start := time.Now()
 	if err := c.Store.SaveAll(x); err != nil {
-		c.stats.skipped = len(x)
+		c.stats.Skipped = len(x)
 		c.stats.timeElapsed = time.Now().Sub(start)
 		return *c.stats, err
 	}
-	c.stats.inserted = len(x)
+	c.stats.Inserted = len(x)
 	c.stats.timeElapsed = time.Now().Sub(start)
 	return *c.stats, nil
 }

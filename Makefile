@@ -1,4 +1,5 @@
 PROJECTNAME := $(shell basename "$(PWD)")
+
 all : clean fmt test build run
 
 build:
@@ -9,9 +10,9 @@ test-geolocation:
 	go test github.com/goku321/geolocation/geolocation -v
 
 test-e2e:
-	@docker-compose up -d postgres
-	go test -build=integration -v
-	docker-compose down
+	docker run --name postgres -e POSTGRES_PASSWORD=password -d -p 6432:5432 postgres
+	go test github.com/goku321/geolocation/e2e_test -v
+	docker stop postgres && docker rm postgres
 
 test-store:
 	docker run --name postgres -e POSTGRES_PASSWORD=postgres -d postgres

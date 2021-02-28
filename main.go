@@ -43,6 +43,7 @@ func main() {
 
 	db := store.New(pg)
 	defer db.Close()
+
 	importer := geo.NewCSVImporter(db)
 	var s geo.Stats
 	var x map[string]*geo.GeoData

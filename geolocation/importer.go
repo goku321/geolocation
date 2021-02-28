@@ -14,12 +14,12 @@ type Importer interface {
 // Stats contains import statistics such as:
 // time elapsed, records skipped/inserted etc.
 type Stats struct {
-	skipped     int
-	inserted    int
+	Skipped     int
+	Inserted    int
 	timeElapsed time.Duration
 }
 
 // Print prints the stats.
 func (s *Stats) Print() {
-	fmt.Printf("time elapsed: %d\ninserted: %d\nskipped: %d\n", s.timeElapsed, s.inserted, s.skipped)
+	fmt.Printf("time elapsed: %d\ninserted: %d\nskipped: %d\n", s.timeElapsed, s.Inserted, s.Skipped)
 }
