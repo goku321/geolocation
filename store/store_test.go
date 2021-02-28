@@ -5,6 +5,7 @@ import (
 
 	geo "github.com/goku321/geolocation/geolocation"
 	"github.com/jmoiron/sqlx"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -28,7 +29,7 @@ var dropTableStmt = "DROP TABLE geolocations"
 func setup(t *testing.T) {
 	t.Helper()
 	var err error
-	connStr := "host=127.0.0.1 user=postgres dbname=postgres password=postgres port=5432 sslmode=disable"
+	connStr := "host=127.0.0.1 user=postgres dbname=postgres password=postgres port=6432 sslmode=disable"
 	db, err = sqlx.Open("postgres", connStr)
 	require.NoError(t, err)
 	postgresTestDB = New(db)
@@ -42,7 +43,6 @@ func teardown(t *testing.T) {
 	require.NoError(t, err)
 }
 
-// todo - update this test to check both get and saveall method.
 func TestSaveAll(t *testing.T) {
 	setup(t)
 	defer teardown(t)
@@ -68,7 +68,17 @@ func TestSaveAll(t *testing.T) {
 		require.Equal(t, 2, count)
 	})
 
-	// more test case:
-	// 1. primary key constaint check.
-	// 2. if the records are saved properly.
+	t.Run("record with ip=ip-1 should exist", func(t *testing.T) {
+		want := &geo.GeoData{IP: "ip-1"}
+		actual, err := postgresTestDB.Get("ip-1")
+		require.NoError(t, err)
+		assert.Equal(t, want, actual)
+	})
+
+	t.Run("record with ip=ip-2 should exist", func(t *testing.T) {
+		want := &geo.GeoData{IP: "ip-2"}
+		actual, err := postgresTestDB.Get("ip-2")
+		require.NoError(t, err)
+		assert.Equal(t, want, actual)
+	})
 }

@@ -77,10 +77,13 @@ func parse(x []string) (*GeoData, error) {
 	if len(x) < 7 {
 		return nil, errors.New("not enough columns in a row")
 	}
+
+	x = sanitize(x)
 	// Check for blank and invalid ip address.
 	if isBlank(x[0]) || net.ParseIP(x[0]) == nil {
 		return nil, errors.New("ip address is blank or invalid")
 	}
+
 	g := &GeoData{}
 	var err error
 	if g.Latitude, err = strconv.ParseFloat(x[4], 64); err != nil {

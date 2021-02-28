@@ -45,16 +45,16 @@ func main() {
 	defer db.Close()
 
 	importer := geo.NewCSVImporter(db)
-	var s geo.Stats
 	var x map[string]*geo.GeoData
 	if x, err = importer.Parse(file); err != nil {
 		log.Fatalf("failed to parse csv: %s", err)
 	}
-	s, err = importer.Import(x)
+
+	stats, err := importer.Import(x)
 	if err != nil {
 		log.Fatalf("failed to import csv: %s", err)
 	}
+
 	log.Println("csv imported successfully")
-	// print stats
-	s.Print()
+	stats.Print()
 }

@@ -15,7 +15,7 @@ test-e2e:
 	docker stop postgres && docker rm postgres
 
 test-store:
-	docker run --name postgres -e POSTGRES_PASSWORD=postgres -d postgres
+	docker run --name postgres -e POSTGRES_PASSWORD=postgres -d -p 6432:5432 postgres
 	go test github.com/goku321/geolocation/store -v
 	docker stop postgres && docker rm postgres
 

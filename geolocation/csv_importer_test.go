@@ -32,7 +32,7 @@ func TestParse(t *testing.T) {
 		},
 		{
 			name: "file exists with valid 5 rows",
-			file: "sample.csv",
+			file: "../e2e_test/sample.csv",
 			want: map[string]*GeoData{
 				"200.106.141.15": {
 					"200.106.141.15",
@@ -73,7 +73,22 @@ func TestParse(t *testing.T) {
 			},
 			wantErr: nil,
 		},
-		// Handle more edge cases.
+		{
+			name: "invalid values for ip, lat/long, mystery_value, leading/trailing spaces",
+			file: "../e2e_test/malformed.csv",
+			want: map[string]*GeoData{
+				"125.159.20.54": {
+					"125.159.20.54",
+					"LI",
+					"Guyana",
+					"Port Karson",
+					-78.2274228596799,
+					-163.26218895343357,
+					1337885276,
+				},
+			},
+			wantErr: nil,
+		},
 	}
 
 	mockDB := &mockStore{}

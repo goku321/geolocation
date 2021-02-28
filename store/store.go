@@ -49,7 +49,7 @@ func (s *Store) Get(ip string) (*geo.GeoData, error) {
 	return location, nil
 }
 
-// SaveAll persists bulk geolocation records on disk.
+// SaveAll persists multiple geolocation records on disk.
 func (s *Store) SaveAll(x map[string]*geo.GeoData) error {
 	txn, err := s.db.Begin()
 	if err != nil {
