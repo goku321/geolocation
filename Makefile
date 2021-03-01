@@ -23,3 +23,9 @@ test: test-geolocation test-store
 
 fmt:
 	go fmt ./...
+
+start-postgres-container:
+	docker run --name postgres -e POSTGRES_PASSWORD=password -d -p 6432:5432 postgres
+
+stop-postgres-container:
+	docker stop postgres && docker rm postgres
