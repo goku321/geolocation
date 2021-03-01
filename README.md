@@ -29,6 +29,10 @@ type GeoDataProvider interface {
 
 It allows to access or store geolocation data. `store` layer implements this interface using postgres but it can be easily be replaced with other user-defined implementation of store.
 
+## Trade offs
+- I've used postgres for store layer but a key-value store would have been a better choice.
+- Case when csv headers are in a different order is not handled.
+
 ## How to run
 1. Set env `DB_CONN_STR` to the url of the database.
 2. Set env  `CSV_FILE` to the file name of csv.
