@@ -39,9 +39,11 @@ It allows to access or store geolocation data. `store` layer implements this int
 1. Spin up a postgres container using `make start-postgres-container`
 
 2. Set env `DB_CONN_STR` to the url of the database.
-	`export DB_CONN_STR=connection-string`
+
+	`export DB_CONN_STR="postgres://postgres:password@127.0.0.1:6432/postgres?sslmode=disable"`
 
 3. Set env  `CSV_FILE` to the file name of csv.
+
 	`export CSV_FILE=filename`
 
 4. `go run main.go`
